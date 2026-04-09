@@ -1,0 +1,154 @@
+<odoo>
+    <data>
+        <record id="view_match_ticket_form" model="ir.ui.view">
+            <field name="name">match.ticket.form</field>
+            <field name="model">match.ticket</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm_ticket" string="Confirm Ticket" type="object" class="oe_highlight" invisible="state == 'confirmed'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="ticket_id"/>
+                                <field name="destination"/>
+                            </group>
+                            <group>
+                                <field name="departure_time"/>
+                                <field name="price"/>
+                                <field name="is_available"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_match_ticket_tree" model="ir.ui.view">
+            <field name="name">match.ticket.tree</field>
+            <field name="model">match.ticket</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="ticket_id"/>
+                    <field name="destination"/>
+                    <field name="price"/>
+                    <field name="is_available"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_match_ticket_search" model="ir.ui.view">
+            <field name="name">match.ticket.search</field>
+            <field name="model">match.ticket</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="ticket_id"/>
+                    <field name="destination"/>
+                    <filter string="Available Tickets" name="available" domain="[('is_available','=',True)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_match_ticket" model="ir.actions.act_window">
+            <field name="name">Tickets</field>
+            <field name="res_model">match.ticket</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+<record id="view_match_booking_form" model="ir.ui.view">
+            <field name="name">match.booking.form</field>
+            <field name="model">match.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm_booking" string="Confirm &amp; Pay" type="object" class="oe_highlight"/>
+                        <field name="status" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"/>
+                    </header>
+
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="booking_id"/>
+                                <field name="user_id"/>
+                                <field name="ticket_id"/>
+                            </group>
+                            <group>
+                                <field name="booking_time"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_match_booking_tree" model="ir.ui.view">
+            <field name="name">match.booking.tree</field>
+            <field name="model">match.booking</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="booking_id"/>
+                    <field name="user_id"/>
+                    <field name="ticket_id"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_match_booking" model="ir.actions.act_window">
+            <field name="name">Bookings</field>
+            <field name="res_model">match.booking</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_match_booking" name="Bookings" parent="menu_match_root" action="action_match_booking" sequence="20"/>
+<record id="view_match_payment_form" model="ir.ui.view">
+            <field name="name">match.payment.form</field>
+            <field name="model">match.payment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm_payment" string="Confirm Payment" type="object" class="oe_highlight" invisible="state == 'paid'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,paid"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="payment_id"/>
+                                <field name="booking_id"/>
+                            </group>
+                            <group>
+                                <field name="discount_percentage"/>
+                                <field name="amount"/>
+                                <field name="payment_time"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_match_payment_tree" model="ir.ui.view">
+            <field name="name">match.payment.tree</field>
+            <field name="model">match.payment</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="payment_id"/>
+                    <field name="booking_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_match_payment" model="ir.actions.act_window">
+            <field name="name">Payments</field>
+            <field name="res_model">match.payment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_match_payment" name="Payments" parent="menu_match_root" action="action_match_payment" sequence="30"/>
+
+        <menuitem id="menu_match_root" name="Match Tickets"/>
+        <menuitem id="menu_match_ticket" name="Tickets" parent="menu_match_root" action="action_match_ticket"/>
+    </data>
+</odoo>

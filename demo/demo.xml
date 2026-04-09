@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1"> <record id="demo_user_ahmed" model="match.user">
+            <field name="name">Ahmed Mohamed</field>
+            <field name="email">ahmed@example.com</field>
+            <field name="phone_number">01122334455</field>
+        </record>
+
+        <record id="demo_ticket_final" model="match.ticket">
+            <field name="ticket_id">TKT-001</field>
+            <field name="destination">Stade de Cairo - Ahly vs Zamalek</field>
+            <field name="price">150.0</field> <field name="departure_time" eval="(datetime.now() + timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="is_available">True</field>
+        </record>
+
+        <record id="demo_ticket_liverpool" model="match.ticket">
+            <field name="ticket_id">TKT-002</field>
+            <field name="destination">Anfield - Liverpool vs Arsenal</field>
+            <field name="price">500.0</field>
+            <field name="is_available">True</field>
+        </record>
+
+        <record id="demo_booking_1" model="match.booking">
+            <field name="booking_id">BK-99</field>
+            <field name="user_id" ref="demo_user_ahmed"/> <field name="ticket_id" ref="demo_ticket_final"/> <field name="status">confirmed</field>
+        </record>
+
+    </data>
+</odoo>

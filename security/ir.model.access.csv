@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_match_user,access_match_user,model_match_user,base.group_user,1,1,1,1
+access_match_ticket,access_match_ticket,model_match_ticket,base.group_user,1,1,1,1
+access_match_booking,access_match_booking,model_match_booking,base.group_user,1,1,1,1
+access_match_payment,access_match_payment,model_match_payment,base.group_user,1,1,1,1
+access_match_credit_card,access_match_credit_card,model_match_credit_card,base.group_user,1,1,1,1
