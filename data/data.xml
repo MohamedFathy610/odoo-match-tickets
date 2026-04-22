@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="user_xml_1" model="match.user"><field name="name">Ali Hassan</field><field name="email">ali@xml.com</field><field name="phone_number">0100000001</field><field name="password">123456</field></record>
+        <record id="user_xml_2" model="match.user"><field name="name">Mona Ali</field><field name="email">mona@xml.com</field><field name="phone_number">0100000002</field><field name="password">123456</field></record>
+        <record id="user_xml_3" model="match.user"><field name="name">Omar Tarek</field><field name="email">omar@xml.com</field><field name="phone_number">0100000003</field><field name="password">123456</field></record>
+        <record id="user_xml_4" model="match.user"><field name="name">Sara Ahmed</field><field name="email">sara@xml.com</field><field name="phone_number">0100000004</field><field name="password">123456</field></record>
+        <record id="user_xml_5" model="match.user"><field name="name">Khaled Sayed</field><field name="email">khaled@xml.com</field><field name="phone_number">0100000005</field><field name="password">123456</field></record>
+        <record id="user_xml_6" model="match.user"><field name="name">Nour Hisham</field><field name="email">nour@xml.com</field><field name="phone_number">0100000006</field><field name="password">123456</field></record>
+        <record id="user_xml_7" model="match.user"><field name="name">Tarek Youssef</field><field name="email">tarek@xml.com</field><field name="phone_number">0100000007</field><field name="password">123456</field></record>
+        <record id="user_xml_8" model="match.user"><field name="name">Salma Nabil</field><field name="email">salma@xml.com</field><field name="phone_number">0100000008</field><field name="password">123456</field></record>
+        <record id="user_xml_9" model="match.user"><field name="name">Youssef Kamal</field><field name="email">youssef@xml.com</field><field name="phone_number">0100000009</field><field name="password">123456</field></record>
+        <record id="user_xml_10" model="match.user"><field name="name">Hoda Samir</field><field name="email">hoda@xml.com</field><field name="phone_number">0100000010</field><field name="password">123456</field></record>
+
+        <record id="ticket_xml_1" model="match.ticket"><field name="ticket_id">TKT-X01</field><field name="destination">Cairo Stadium</field><field name="price">150.0</field></record>
+        <record id="ticket_xml_2" model="match.ticket"><field name="ticket_id">TKT-X02</field><field name="destination">Alexandria</field><field name="price">200.0</field></record>
+        <record id="ticket_xml_3" model="match.ticket"><field name="ticket_id">TKT-X03</field><field name="destination">Luxor Arena</field><field name="price">300.0</field></record>
+        <record id="ticket_xml_4" model="match.ticket"><field name="ticket_id">TKT-X04</field><field name="destination">Aswan Field</field><field name="price">250.0</field></record>
+        <record id="ticket_xml_5" model="match.ticket"><field name="ticket_id">TKT-X05</field><field name="destination">Port Said</field><field name="price">100.0</field></record>
+        <record id="ticket_xml_6" model="match.ticket"><field name="ticket_id">TKT-X06</field><field name="destination">Ismailia</field><field name="price">120.0</field></record>
+        <record id="ticket_xml_7" model="match.ticket"><field name="ticket_id">TKT-X07</field><field name="destination">Suez Stadium</field><field name="price">130.0</field></record>
+        <record id="ticket_xml_8" model="match.ticket"><field name="ticket_id">TKT-X08</field><field name="destination">Gouna</field><field name="price">500.0</field></record>
+        <record id="ticket_xml_9" model="match.ticket"><field name="ticket_id">TKT-X09</field><field name="destination">Borg El Arab</field><field name="price">180.0</field></record>
+        <record id="ticket_xml_10" model="match.ticket"><field name="ticket_id">TKT-X10</field><field name="destination">Wadi Degla</field><field name="price">160.0</field></record>
+
+        <record id="booking_xml_1" model="match.booking"><field name="booking_id">BK-X01</field><field name="user_id" ref="user_xml_1"/><field name="ticket_id" ref="ticket_xml_1"/></record>
+        <record id="booking_xml_2" model="match.booking"><field name="booking_id">BK-X02</field><field name="user_id" ref="user_xml_2"/><field name="ticket_id" ref="ticket_xml_2"/></record>
+        <record id="booking_xml_3" model="match.booking"><field name="booking_id">BK-X03</field><field name="user_id" ref="user_xml_3"/><field name="ticket_id" ref="ticket_xml_3"/></record>
+        <record id="booking_xml_4" model="match.booking"><field name="booking_id">BK-X04</field><field name="user_id" ref="user_xml_4"/><field name="ticket_id" ref="ticket_xml_4"/></record>
+        <record id="booking_xml_5" model="match.booking"><field name="booking_id">BK-X05</field><field name="user_id" ref="user_xml_5"/><field name="ticket_id" ref="ticket_xml_5"/></record>
+        <record id="booking_xml_6" model="match.booking"><field name="booking_id">BK-X06</field><field name="user_id" ref="user_xml_6"/><field name="ticket_id" ref="ticket_xml_6"/></record>
+        <record id="booking_xml_7" model="match.booking"><field name="booking_id">BK-X07</field><field name="user_id" ref="user_xml_7"/><field name="ticket_id" ref="ticket_xml_7"/></record>
+        <record id="booking_xml_8" model="match.booking"><field name="booking_id">BK-X08</field><field name="user_id" ref="user_xml_8"/><field name="ticket_id" ref="ticket_xml_8"/></record>
+        <record id="booking_xml_9" model="match.booking"><field name="booking_id">BK-X09</field><field name="user_id" ref="user_xml_9"/><field name="ticket_id" ref="ticket_xml_9"/></record>
+        <record id="booking_xml_10" model="match.booking"><field name="booking_id">BK-X10</field><field name="user_id" ref="user_xml_10"/><field name="ticket_id" ref="ticket_xml_10"/></record>
+
+        <record id="cc_xml_1" model="match.credit_card"><field name="user_id" ref="user_xml_1"/><field name="card_number">1111222233334444</field><field name="card_holder">Ali Hassan</field><field name="expiry_date">12/26</field><field name="cvv">123</field></record>
+        <record id="cc_xml_2" model="match.credit_card"><field name="user_id" ref="user_xml_2"/><field name="card_number">5555666677778888</field><field name="card_holder">Mona Ali</field><field name="expiry_date">10/27</field><field name="cvv">456</field></record>
+        <record id="cc_xml_3" model="match.credit_card"><field name="user_id" ref="user_xml_3"/><field name="card_number">9999000011112222</field><field name="card_holder">Omar Tarek</field><field name="expiry_date">01/25</field><field name="cvv">789</field></record>
+        <record id="cc_xml_4" model="match.credit_card"><field name="user_id" ref="user_xml_4"/><field name="card_number">3333444455556666</field><field name="card_holder">Sara Ahmed</field><field name="expiry_date">05/28</field><field name="cvv">321</field></record>
+        <record id="cc_xml_5" model="match.credit_card"><field name="user_id" ref="user_xml_5"/><field name="card_number">7777888899990000</field><field name="card_holder">Khaled Sayed</field><field name="expiry_date">11/26</field><field name="cvv">654</field></record>
+        <record id="cc_xml_6" model="match.credit_card"><field name="user_id" ref="user_xml_6"/><field name="card_number">1234123412341234</field><field name="card_holder">Nour Hisham</field><field name="expiry_date">08/29</field><field name="cvv">987</field></record>
+        <record id="cc_xml_7" model="match.credit_card"><field name="user_id" ref="user_xml_7"/><field name="card_number">4321432143214321</field><field name="card_holder">Tarek Youssef</field><field name="expiry_date">02/25</field><field name="cvv">147</field></record>
+        <record id="cc_xml_8" model="match.credit_card"><field name="user_id" ref="user_xml_8"/><field name="card_number">5678567856785678</field><field name="card_holder">Salma Nabil</field><field name="expiry_date">09/27</field><field name="cvv">258</field></record>
+        <record id="cc_xml_9" model="match.credit_card"><field name="user_id" ref="user_xml_9"/><field name="card_number">8765876587658765</field><field name="card_holder">Youssef Kamal</field><field name="expiry_date">03/26</field><field name="cvv">369</field></record>
+        <record id="cc_xml_10" model="match.credit_card"><field name="user_id" ref="user_xml_10"/><field name="card_number">1122334455667788</field><field name="card_holder">Hoda Samir</field><field name="expiry_date">07/28</field><field name="cvv">159</field></record>
+
+        <record id="pay_xml_1" model="match.payment"><field name="payment_id">PAY-X01</field><field name="booking_id" ref="booking_xml_1"/><field name="payment_method">credit_card</field><field name="credit_card_id" ref="cc_xml_1"/></record>
+        <record id="pay_xml_2" model="match.payment"><field name="payment_id">PAY-X02</field><field name="booking_id" ref="booking_xml_2"/><field name="payment_method">cash</field></record>
+        <record id="pay_xml_3" model="match.payment"><field name="payment_id">PAY-X03</field><field name="booking_id" ref="booking_xml_3"/><field name="payment_method">credit_card</field><field name="credit_card_id" ref="cc_xml_3"/></record>
+        <record id="pay_xml_4" model="match.payment"><field name="payment_id">PAY-X04</field><field name="booking_id" ref="booking_xml_4"/><field name="payment_method">cash</field></record>
+        <record id="pay_xml_5" model="match.payment"><field name="payment_id">PAY-X05</field><field name="booking_id" ref="booking_xml_5"/><field name="payment_method">credit_card</field><field name="credit_card_id" ref="cc_xml_5"/></record>
+        <record id="pay_xml_6" model="match.payment"><field name="payment_id">PAY-X06</field><field name="booking_id" ref="booking_xml_6"/><field name="payment_method">cash</field></record>
+        <record id="pay_xml_7" model="match.payment"><field name="payment_id">PAY-X07</field><field name="booking_id" ref="booking_xml_7"/><field name="payment_method">credit_card</field><field name="credit_card_id" ref="cc_xml_7"/></record>
+        <record id="pay_xml_8" model="match.payment"><field name="payment_id">PAY-X08</field><field name="booking_id" ref="booking_xml_8"/><field name="payment_method">cash</field></record>
+        <record id="pay_xml_9" model="match.payment"><field name="payment_id">PAY-X09</field><field name="booking_id" ref="booking_xml_9"/><field name="payment_method">credit_card</field><field name="credit_card_id" ref="cc_xml_9"/></record>
+        <record id="pay_xml_10" model="match.payment"><field name="payment_id">PAY-X10</field><field name="booking_id" ref="booking_xml_10"/><field name="payment_method">cash</field></record>
+    </data>
+</odoo>
