@@ -89,6 +89,7 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
+                        <button name="action_check_isbn_manually" string="Check ISBN Validity" type="object" class="btn-info"/>
                         <button name="action_confirm_ticket" string="Confirm Ticket" type="object" class="oe_highlight" invisible="state == 'confirmed'"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
                     </header>
@@ -97,6 +98,7 @@
                             <group>
                                 <field name="ticket_id"/>
                                 <field name="destination"/>
+                                <field name="isbn"/>
                             </group>
                             <group>
                                 <field name="departure_time"/>

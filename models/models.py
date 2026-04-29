@@ -1,5 +1,6 @@
 # models/models.py
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError  # استدعاء مكتبة الأخطاء عشان القيود تشتغل
 
 
 # ==========================================
@@ -21,7 +22,6 @@ class MatchUser(models.Model):
     ], string='Status', default='draft')
 
     booking_ids = fields.One2many('match.booking', 'user_id', string='Bookings')
-    # الحقل الجديد عشان اليوزر يشوف الكروت بتاعته
     credit_card_ids = fields.One2many('match.credit_card', 'user_id', string='Credit Cards')
 
     def action_confirm_user(self):
@@ -39,12 +39,59 @@ class MatchTicket(models.Model):
 
     price = fields.Float(string='Price', required=True, default=100.0)
     is_available = fields.Boolean(string='Is Available', default=True)
+
+    # حقل الـ ISBN الجديد
+    isbn = fields.Char(string='ISBN')
+
     state = fields.Selection([
         ('draft', 'Draft'),
         ('confirmed', 'Confirmed'),
     ], string='Status', default='draft')
 
     booking_ids = fields.One2many('match.booking', 'ticket_id', string='Match Bookings')
+
+    # ==========================================
+    # SQL Constraint: لمنع تكرار الـ ISBN في الداتابيز
+    # ==========================================
+    _sql_constraints = [
+        ('isbn_unique', 'UNIQUE(isbn)', 'This ISBN already exists! ISBN must be unique.')
+    ]
+
+    # ==========================================
+    # API Constraint: للتحقق من أن الرقم يتكون من 10 أو 13 رقم فقط
+    # ==========================================
+    @api.constrains('isbn')
+    def _check_isbn_format(self):
+        for record in self:
+            if record.isbn:
+                # التأكد من عدم وجود حروف
+                if not record.isbn.isdigit():
+                    raise ValidationError("The ISBN must contain ONLY numbers!")
+                # التأكد من طول الرقم
+                if len(record.isbn) not in [10, 13]:
+                    raise ValidationError("The ISBN must be exactly 10 or 13 digits long!")
+
+    # ==========================================
+    # دالة الزرار لمراجعة الـ ISBN وعرض رسالة نجاح
+    # ==========================================
+    def action_check_isbn_manually(self):
+        for record in self:
+            if not record.isbn:
+                raise ValidationError("Please enter an ISBN first!")
+
+            if record.isbn.isdigit() and len(record.isbn) in [10, 13]:
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': 'Success Validation',
+                        'message': f'The ISBN ({record.isbn}) is perfectly valid!',
+                        'type': 'success',
+                        'sticky': False,
+                    }
+                }
+            else:
+                raise ValidationError("Invalid ISBN! Make sure it contains 10 or 13 digits only.")
 
     def action_confirm_ticket(self):
         for record in self:
@@ -85,7 +132,6 @@ class MatchCreditCard(models.Model):
     _name = 'match.credit_card'
     _description = 'Credit Card'
 
-    # ربط الكارت باليوزر (خليتها required=False مؤقتاً عشان لو عندك كروت قديمة في الداتابيز متعملش إيرور)
     user_id = fields.Many2one('match.user', string='Owner', ondelete='cascade')
     card_number = fields.Char(string='Card Number', required=True)
     card_holder = fields.Char(string='Card Holder', required=True)
@@ -100,10 +146,8 @@ class MatchPayment(models.Model):
     payment_id = fields.Char(string='Payment ID', required=True)
     booking_id = fields.Many2one('match.booking', string='Booking', required=True)
 
-    # حقل مخفي بيجيب اليوزر صاحب الحجز تلقائياً عشان نفلتر بيه الكروت في الشاشة
     user_id = fields.Many2one(related='booking_id.user_id', string='Customer', store=True)
 
-    # طريقة الدفع
     payment_method = fields.Selection([
         ('cash', 'Cash'),
         ('credit_card', 'Credit Card')
