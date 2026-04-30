@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. تعريف التقرير -->
+    <record id="action_report_match_booking" model="ir.actions.report">
+        <field name="name">Print Ticket</field>
+        <field name="model">match.booking</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">odoo-match-tickets.report_match_booking_template</field>
+        <field name="report_file">odoo-match-tickets.report_match_booking_template</field>
+        <field name="print_report_name">'Ticket - %s' % (object.booking_id)</field>
+        <field name="binding_model_id" ref="model_match_booking"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- 2. تصميم التذكرة (Template) -->
+    <template id="report_match_booking_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+
+                        <!-- ستايلات التذكرة -->
+                        <style>
+                            .ticket-card {
+                                border: 2px solid #1f2937;
+                                border-radius: 12px;
+                                margin-top: 20px;
+                                page-break-inside: avoid;
+                                font-family: 'Arial', sans-serif;
+                            }
+                            .ticket-header {
+                                background-color: #1f2937;
+                                color: #ffffff;
+                                padding: 15px 20px;
+                                border-top-left-radius: 10px;
+                                border-top-right-radius: 10px;
+                                text-align: center;
+                                text-transform: uppercase;
+                                letter-spacing: 2px;
+                            }
+                            .vip-badge {
+                                background-color: #fbbf24;
+                                color: #000;
+                                padding: 5px 15px;
+                                border-radius: 20px;
+                                font-weight: bold;
+                                font-size: 14px;
+                                margin-top: 10px;
+                                display: inline-block;
+                                border: 1px solid #b45309;
+                                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                            }
+                            .ticket-body {
+                                padding: 25px;
+                                background-color: #f9fafb;
+                            }
+                            .match-title {
+                                font-size: 28px;
+                                font-weight: 900;
+                                color: #111827;
+                                text-align: center;
+                                margin-bottom: 25px;
+                                border-bottom: 2px solid #e5e7eb;
+                                padding-bottom: 15px;
+                            }
+                            .info-label {
+                                font-size: 12px;
+                                color: #6b7280;
+                                text-transform: uppercase;
+                                margin-bottom: 2px;
+                            }
+                            .info-value {
+                                font-size: 16px;
+                                font-weight: bold;
+                                color: #1f2937;
+                                margin-bottom: 15px;
+                            }
+                            .ticket-stub {
+                                border-left: 2px dashed #9ca3af;
+                                text-align: center;
+                                padding-left: 20px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: center;
+                            }
+                            .price-tag {
+                                font-size: 24px;
+                                font-weight: 900;
+                                color: #059669;
+                                margin-top: 15px;
+                                margin-bottom: 5px;
+                            }
+                            .ticket-footer {
+                                background-color: #e5e7eb;
+                                padding: 12px;
+                                text-align: center;
+                                font-size: 13px;
+                                color: #374151;
+                                border-bottom-left-radius: 10px;
+                                border-bottom-right-radius: 10px;
+                            }
+                        </style>
+
+                        <!-- محتوى التذكرة -->
+                        <div class="ticket-card">
+
+                            <!-- الرأس (Header) -->
+                            <div class="ticket-header">
+                                <h2 class="mb-0" style="color: white; margin: 0;">🎫 OFFICIAL MATCH TICKET</h2>
+                                <t t-if="o.is_vip">
+                                    <div class="vip-badge">⭐ VIP LOUNGE ACCESS ⭐</div>
+                                </t>
+                            </div>
+
+                            <!-- جسم التذكرة (Body) -->
+                            <div class="ticket-body">
+                                <div class="match-title">
+                                    <span t-field="o.ticket_id.match_name"/>
+                                </div>
+
+                                <div class="row">
+                                    <!-- الجزء الخاص ببيانات الماتش والمشجع -->
+                                    <div class="col-8">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="info-label">Customer Name</div>
+                                                <div class="info-value"><span t-field="o.user_id.name"/></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="info-label">Booking Reference</div>
+                                                <div class="info-value"><span t-field="o.booking_id"/></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-6">
+                                                <div class="info-label">🏟️ Stadium / Location</div>
+                                                <div class="info-value"><span t-field="o.ticket_id.destination"/></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="info-label">🕒 Date &amp; Time</div>
+                                                <div class="info-value"><span t-field="o.ticket_id.departure_time"/></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <div class="info-label">Booking Date</div>
+                                                <div class="info-value" style="font-size: 14px; font-weight: normal;"><span t-field="o.booking_time"/></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- الجزء الخاص بالباركود والسعر (Ticket Stub) -->
+                                    <div class="col-4 ticket-stub">
+                                        <!-- التعديل هنا: استخدام Widget الباركود الأساسي في أودو -->
+                                        <div t-field="o.booking_id" t-options="{'widget': 'barcode', 'symbology': 'Code128', 'width': 400, 'height': 100, 'img_style': 'width:100%; max-width: 180px; height: 50px;'}"/>
+                                        <div style="font-family: monospace; margin-top: 5px; color: #4b5563;"><span t-field="o.booking_id"/></div>
+
+                                        <div class="price-tag">
+                                            <span t-field="o.total_price"/> EGP
+                                        </div>
+
+                                        <div>
+                                            <span t-attf-class="badge #{'badge-success' if o.status == 'confirmed' else 'badge-secondary'}" style="font-size: 16px; padding: 5px 10px; color: #059669 ;">
+                                                <span t-field="o.status"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- تذييل التذكرة (Footer) -->
+                            <div class="ticket-footer">
+                                <strong>⚠️ IMPORTANT:</strong> Please arrive at the stadium gates at least 2 hours before kickoff. Present this ticket at the electronic gates.
+                            </div>
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

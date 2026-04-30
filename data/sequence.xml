@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_match_ticket" model="ir.sequence">
+            <field name="name">Match Ticket Sequence</field>
+            <field name="code">match.ticket</field>
+            <field name="prefix">TKT-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_match_booking" model="ir.sequence">
+            <field name="name">Match Booking Sequence</field>
+            <field name="code">match.booking</field>
+            <field name="prefix">BKG-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_match_payment" model="ir.sequence">
+            <field name="name">Match Payment Sequence</field>
+            <field name="code">match.payment</field>
+            <field name="prefix">PAY-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

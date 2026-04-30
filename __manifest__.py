@@ -1,22 +1,20 @@
-# __manifest__.py
 {
     'name': 'Match Ticket Booking',
     'version': '1.0',
     'summary': 'Manage users, tickets, bookings, and payments',
     'description': 'A complete module to manage football match tickets based on class diagram.',
-    'author': 'Mohamed Fathy',
+    'author': ' IS TEAM ' ,
     'depends': ['base'],
     'data': [
-        'security/ir.model.access.csv', # لا تنسى إعطاء الصلاحيات هنا
-        'views/views.xml',
+        'security/ir.model.access.csv',
+        'data/sequence.xml',
         'data/data.xml',
-    ],
-    'demo': [
-        'demo/demo.xml',
+        'views/views.xml',
+        'reports/ticket_report.xml',
     ],
     'application': True,
     'installable': True,
-'category': 'Sales', # أو ممكن تكتب 'Entertainment'
-    'sequence': 1,       # السطر ده بيخليه يظهر في أول صفحة التطبيقات
-    'website' :"https://github.com/MohamedFathy610/odoo-match-tickets/blob/main/classdaigram.jpeg"
+    'category': 'Sales',
+    'sequence': 1,
+    'website': "https://github.com/MohamedFathy610/odoo-match-tickets/blob/main/classdaigram.jpeg",
 }
