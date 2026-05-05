@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+from datetime import datetime, time, timedelta
 import os
 import re
 
@@ -39,39 +40,45 @@ class MatchUser(models.Model):
     credit_card_ids = fields.One2many('match.credit_card', 'user_id', string='Credit Cards')
 
     _sql_constraints = [
-        ('email_unique', 'unique(email)', 'عذراً! هذا البريد الإلكتروني مسجل بالفعل لمستخدم آخر.'),
-        ('phone_unique', 'unique(phone_number)', 'عذراً! رقم الهاتف هذا مسجل بالفعل لمستخدم آخر.')
+        ('email_unique', 'unique(email)', 'Sorry! This email is already registered to another user.'),
+        ('phone_unique', 'unique(phone_number)', 'Sorry! This phone number is already registered to another user.')
     ]
 
     @api.constrains('email')
     def _check_email_format(self):
         for record in self:
             if record.email and not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', record.email):
-                raise ValidationError("عذراً! يرجى إدخال بريد إلكتروني صحيح (مثال: name@example.com).")
+                raise ValidationError("Sorry! Please enter a valid email address (e.g., name@example.com).")
 
     @api.constrains('phone_number')
     def _check_phone_number(self):
         for record in self:
             if record.phone_number:
                 if not record.phone_number.isdigit():
-                    raise ValidationError("عذراً! يجب أن يحتوي رقم الهاتف على أرقام فقط دون حروف أو رموز.")
+                    raise ValidationError("Sorry! The phone number must contain only digits, without letters or symbols.")
                 if len(record.phone_number) != 11:
-                    raise ValidationError("عذراً! يجب أن يتكون رقم الهاتف من 11 رقماً بالضبط.")
+                    raise ValidationError("Sorry! The phone number must consist of exactly 11 digits.")
 
     @api.constrains('name')
     def _check_name(self):
         for record in self:
             if record.name and not re.match(r'^[A-Za-z\u0600-\u06FF\s]+$', record.name):
-                raise ValidationError("عذراً! يجب أن يحتوي الاسم على حروف فقط (دون أرقام أو رموز).")
+                raise ValidationError("Sorry! The name must contain only letters and spaces (no numbers or symbols).")
 
     @api.constrains('password')
     def _check_password_length(self):
         for record in self:
             if record.password and len(record.password) < 6:
-                raise ValidationError("عذراً! يجب أن تتكون كلمة المرور من 6 أحرف أو أرقام على الأقل.")
+                raise ValidationError("Sorry! The password must be at least 6 characters or digits long.")
 
     def action_confirm_user(self):
         for record in self: record.state = 'confirmed'
+
+    def write(self, vals):
+        for record in self:
+            if record.state == 'confirmed' and set(vals.keys()) - {'state'}:
+                raise ValidationError("Sorry! User data cannot be modified after the account has been confirmed.")
+        return super(MatchUser, self).write(vals)
 
 
 class MatchTicket(models.Model):
@@ -92,41 +99,97 @@ class MatchTicket(models.Model):
 
     @api.onchange('home_team')
     def _onchange_home_team_stadium(self):
-        if self.home_team: self.destination = TEAM_STADIUMS.get(self.home_team, 'TBD Stadium')
-
-    @api.constrains('home_team', 'away_team')
-    def _check_different_teams(self):
-        for record in self:
-            if record.home_team and record.away_team and record.home_team == record.away_team:
-                raise ValidationError("عذراً! لا يمكن أن يلعب الفريق ضد نفسه. يرجى اختيار فريقين مختلفين.")
-
-    @api.constrains('departure_time')
-    def _check_future_date(self):
-        for record in self:
-            if record.departure_time and record.departure_time <= fields.Datetime.now():
-                raise ValidationError("عذراً! لا يمكن تعيين موعد مباراة في الماضي. يرجى اختيار تاريخ مستقبلي.")
+        if self.home_team:
+            self.destination = TEAM_STADIUMS.get(self.home_team, 'TBD Stadium')
 
     @api.depends('home_team', 'away_team')
     def _compute_match_name(self):
         for record in self:
             record.match_name = f"{record.home_team} VS {record.away_team}" if record.home_team and record.away_team else "TBD"
 
-        # قيد منع تضارب المواعيد في نفس الاستاد
-        @api.constrains('destination', 'departure_time')
-        def _check_stadium_conflict(self):
-            for record in self:
-                if record.destination and record.departure_time:
-                    # البحث عن أي ماتش آخر في نفس الاستاد ونفس الوقت
-                    conflict = self.search([
-                        ('id', '!=', record.id),
-                        ('destination', '=', record.destination),
-                        ('departure_time', '=', record.departure_time)
-                    ])
-                    if conflict:
-                        raise ValidationError(
-                            f"عذراً! لا يمكن تسجيل المباراة. يوجد تضارب في المواعيد: "
-                            f"استاد ({record.destination}) مشغول بمباراة أخرى في نفس التوقيت ({record.departure_time})."
-                        )
+    # ==========================================
+    # Logical Validations
+    # ==========================================
+
+    @api.constrains('home_team', 'away_team')
+    def _check_different_teams(self):
+        for record in self:
+            if record.home_team and record.away_team and record.home_team == record.away_team:
+                raise ValidationError("Sorry! A team cannot play against itself. Please select two different teams.")
+
+    @api.constrains('price')
+    def _check_logical_price(self):
+        for record in self:
+            if record.price <= 0:
+                raise ValidationError("Sorry! The ticket price must be a number greater than zero.")
+            if record.price > 50000:
+                raise ValidationError("Sorry! The price is unusually high. Please ensure you enter the correct ticket value.")
+
+    @api.constrains('departure_time')
+    def _check_future_date(self):
+        for record in self:
+            if record.departure_time and record.departure_time <= fields.Datetime.now():
+                raise ValidationError("Sorry! A match cannot be scheduled in the past. Please choose a future date.")
+
+    @api.constrains('departure_time', 'destination', 'home_team', 'away_team')
+    def _check_logical_scheduling(self):
+        for record in self:
+            if not record.departure_time:
+                continue
+
+            # 1. Stadium Constraint (Only one match per day per stadium)
+            match_date = record.departure_time.date()
+            start_of_day = datetime.combine(match_date, time.min)
+            end_of_day = datetime.combine(match_date, time.max)
+
+            stadium_conflict = self.search([
+                ('id', '!=', record.id),
+                ('destination', '=', record.destination),
+                ('departure_time', '>=', start_of_day),
+                ('departure_time', '<=', end_of_day)
+            ])
+            if stadium_conflict:
+                raise ValidationError(
+                    f"Sorry! The stadium ({record.destination}) is already booked for another match on this day. "
+                    f"A stadium cannot host more than one match per day."
+                )
+
+            # 2. Team Fatigue Constraint (Teams must have a 3-day / 72-hour rest period)
+            team_buffer = timedelta(days=3)
+            team_start = record.departure_time - team_buffer
+            team_end = record.departure_time + team_buffer
+
+            team_conflict = self.search([
+                ('id', '!=', record.id),
+                ('departure_time', '>=', team_start),
+                ('departure_time', '<=', team_end),
+                '|', '|', '|',
+                ('home_team', '=', record.home_team),
+                ('away_team', '=', record.home_team),
+                ('home_team', '=', record.away_team),
+                ('away_team', '=', record.away_team)
+            ])
+            if team_conflict:
+                raise ValidationError(
+                    f"Sorry! One of the teams ({record.home_team} or {record.away_team}) "
+                    f"already has a match scheduled within 3 days of this date. Please allow for the required rest period."
+                )
+
+            # 3. Home and Away System Constraint (Teams can only play twice with swapped home/away sides)
+            history_conflict = self.search([
+                ('id', '!=', record.id),
+                ('home_team', '=', record.home_team),
+                ('away_team', '=', record.away_team)
+            ])
+            if history_conflict:
+                raise ValidationError(
+                    f"Sorry! The match between ({record.home_team}) as the home team and ({record.away_team}) as the away team "
+                    f"has already been played. Under the home-and-away system, this exact matchup cannot be repeated unless ({record.away_team}) is the home team."
+                )
+
+    # ==========================================
+    # Core Functions
+    # ==========================================
 
     @api.model
     def create(self, vals):
@@ -135,7 +198,14 @@ class MatchTicket(models.Model):
         return super(MatchTicket, self).create(vals)
 
     def action_confirm_ticket(self):
-        for record in self: record.state = 'confirmed'
+        for record in self:
+            record.state = 'confirmed'
+
+    def write(self, vals):
+        for record in self:
+            if record.state == 'confirmed' and set(vals.keys()) - {'state'}:
+                raise ValidationError("Sorry! Ticket data cannot be modified after it has been confirmed.")
+        return super(MatchTicket, self).write(vals)
 
 
 class MatchBooking(models.Model):
@@ -163,13 +233,13 @@ class MatchBooking(models.Model):
     def _check_user_confirmed(self):
         for record in self:
             if record.user_id.state != 'confirmed':
-                raise ValidationError("عذراً! لا يمكن إتمام الحجز. يجب تأكيد حساب المستخدم (Confirmed) أولاً.")
+                raise ValidationError("Sorry! The booking cannot be completed. The user account must be confirmed first.")
 
     @api.constrains('ticket_id')
     def _check_ticket_availability(self):
         for record in self:
             if record.ticket_id and not record.ticket_id.is_available:
-                raise ValidationError("عذراً! لا يمكن حجز هذه التذكرة لأن الماتش غير متاح حالياً.")
+                raise ValidationError("Sorry! This ticket cannot be booked because the match is not currently available.")
 
     @api.depends('payment_method')
     def _compute_discount(self):
@@ -203,6 +273,12 @@ class MatchBooking(models.Model):
             os.environ['PATH'] += os.pathsep + wk_path
         return self.env.ref('odoo-match-tickets.action_report_match_booking').report_action(self)
 
+    def write(self, vals):
+        for record in self:
+            if record.status == 'confirmed' and set(vals.keys()) - {'status'}:
+                raise ValidationError("Sorry! Booking data cannot be modified after it has been confirmed.")
+        return super(MatchBooking, self).write(vals)
+
 
 class MatchCreditCard(models.Model):
     _name = 'match.credit_card'
@@ -218,25 +294,25 @@ class MatchCreditCard(models.Model):
     def _check_card_number(self):
         for record in self:
             if not record.card_number.isdigit() or len(record.card_number) != 16:
-                raise ValidationError("عذراً! رقم البطاقة يجب أن يتكون من 16 رقماً فقط.")
+                raise ValidationError("Sorry! The card number must consist of exactly 16 digits.")
 
     @api.constrains('card_holder')
     def _check_card_holder(self):
         for record in self:
             if not re.match(r'^[A-Za-z\u0600-\u06FF\s]+$', record.card_holder):
-                raise ValidationError("عذراً! اسم حامل البطاقة يجب أن يحتوي على حروف ومسافات فقط.")
+                raise ValidationError("Sorry! The cardholder name must contain only letters and spaces.")
 
     @api.constrains('expiry_date')
     def _check_expiry_date(self):
         for record in self:
             if not re.match(r'^(0[1-9]|1[0-2])\/\d{2}$', record.expiry_date):
-                raise ValidationError("عذراً! تاريخ الانتهاء يجب أن يكون بصيغة MM/YY (مثال: 12/26).")
+                raise ValidationError("Sorry! The expiry date must be in the format MM/YY (e.g., 12/26).")
 
     @api.constrains('cvv')
     def _check_cvv(self):
         for record in self:
             if not record.cvv.isdigit() or len(record.cvv) not in [3, 4]:
-                raise ValidationError("عذراً! رمز الـ CVV يجب أن يتكون من 3 أو 4 أرقام فقط.")
+                raise ValidationError("Sorry! The CVV code must consist of exactly 3 or 4 digits.")
 
 
 class MatchPayment(models.Model):
@@ -263,7 +339,6 @@ class MatchPayment(models.Model):
     def action_confirm_payment(self):
         for record in self: record.state = 'paid'
 
-    # الدالة دي اللي كانت ناقصة وسببت المشكلة!
     def action_print_ticket(self):
         if self.booking_id:
             wk_path = r'C:\Program Files\wkhtmltopdf\bin'
@@ -278,16 +353,20 @@ class MatchPayment(models.Model):
                 if record.payment_time.date() == record.booking_id.ticket_id.departure_time.date():
                     raise ValidationError("Security Error: Payment cannot be made on the exact same day as the match!")
 
+    def write(self, vals):
+        for record in self:
+            if record.state == 'paid' and set(vals.keys()) - {'state'}:
+                raise ValidationError("Sorry! Payment data cannot be modified after the transaction is completed.")
+        return super(MatchPayment, self).write(vals)
+
 
 # ==========================================
-# 2. أكواد الوراثة
+# 2. Inheritance Code
 # ==========================================
 
 class MatchTicketExtension(models.Model):
     _inherit = 'match.ticket'
     barcode = fields.Char(string='Ticket Barcode')
-
-
 
 
 class MatchTicketVIP(models.Model):

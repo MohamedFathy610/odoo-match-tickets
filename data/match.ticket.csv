@@ -1,0 +1,11 @@
+id,home_team,away_team,destination,departure_time,price,is_available,state
+ticket_csv_101,Pyramids FC,Pharco FC,30 June Stadium,2026-06-01 19:00:00,400.0,True,confirmed
+ticket_csv_102,Suez SC,Petrojet,Suez Stadium,2026-06-02 18:00:00,100.0,True,draft
+ticket_csv_103,Wadi Degla,Enppi,Al Salam Stadium,2026-06-03 17:00:00,120.0,True,confirmed
+ticket_csv_104,Ceramica Cleopatra,National Bank of Egypt,Arab Contractors Stadium,2026-06-04 20:00:00,150.0,True,confirmed
+ticket_csv_105,Aswan SC,Al Aluminium,Aswan Stadium,2026-06-05 16:00:00,100.0,True,draft
+ticket_csv_106,Pharco FC,Pyramids FC,Borg El Arab,2026-06-10 19:00:00,400.0,True,confirmed
+ticket_csv_107,Petrojet,Suez SC,Suez Stadium,2026-06-11 18:00:00,100.0,True,confirmed
+ticket_csv_108,Enppi,Wadi Degla,Petrosport Stadium,2026-06-12 17:00:00,120.0,True,draft
+ticket_csv_109,National Bank of Egypt,Ceramica Cleopatra,Cairo Stadium,2026-06-13 19:00:00,150.0,True,confirmed
+ticket_csv_110,Al Aluminium,Aswan SC,Nagaa Hammadi Stadium,2026-06-14 15:00:00,100.0,True,confirmed

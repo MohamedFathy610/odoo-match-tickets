@@ -1,0 +1,11 @@
+id,name,email,phone_number,password,state
+user_csv_101,Ahmed Mahmoud,ahmed.m@gmail.com,01011111111,123456,draft
+user_csv_102,Fatima Ali,fatima.a@gmail.com,01122222222,123456,draft
+user_csv_103,Mahmoud Hassan,mahmoud.h@gmail.com,01233333333,123456,draft
+user_csv_104,Nour Ezzat,nour.e@gmail.com,01544444444,123456,draft
+user_csv_105,Omar Tariq,omar.t@gmail.com,01055555555,123456,draft
+user_csv_106,Salma Youssef,salma.y@gmail.com,01166666666,123456,draft
+user_csv_107,Karim Ibrahim,karim.i@gmail.com,01277777777,123456,draft
+user_csv_108,Hoda Samir,hoda.s@gmail.com,01588888888,123456,draft
+user_csv_109,Youssef Kamal,youssef.k@gmail.com,01099999999,123456,draft
+user_csv_110,Rawan Khaled,rawan.k@gmail.com,01100000000,123456,draft

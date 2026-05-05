@@ -29,6 +29,19 @@
         <!-- ========================================== -->
         <!-- 1. شاشات المستخدم -->
         <!-- ========================================== -->
+        <record id="view_match_user_search" model="ir.ui.view">
+            <field name="name">match.user.search</field>
+            <field name="model">match.user</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone_number"/>
+                    <filter string="Confirmed Users" name="confirmed_users" domain="[('state','=','confirmed')]"/>
+                </search>
+            </field>
+        </record>
+
         <record id="view_match_user_form" model="ir.ui.view">
             <field name="name">match.user.form</field>
             <field name="model">match.user</field>
@@ -89,6 +102,19 @@
         <!-- ========================================== -->
         <!-- 2. شاشات التذاكر -->
         <!-- ========================================== -->
+        <record id="view_match_ticket_search" model="ir.ui.view">
+            <field name="name">match.ticket.search</field>
+            <field name="model">match.ticket</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="ticket_id"/>
+                    <field name="match_name"/>
+                    <field name="destination"/>
+                    <filter string="Available Tickets" name="available_tickets" domain="[('is_available','=',True)]"/>
+                </search>
+            </field>
+        </record>
+
         <record id="view_match_ticket_form" model="ir.ui.view">
             <field name="name">match.ticket.form</field>
             <field name="model">match.ticket</field>
@@ -144,6 +170,19 @@
         <!-- ========================================== -->
         <!-- 3. شاشات الحجز -->
         <!-- ========================================== -->
+        <record id="view_match_booking_search" model="ir.ui.view">
+            <field name="name">match.booking.search</field>
+            <field name="model">match.booking</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="booking_id"/>
+                    <field name="user_id"/>
+                    <field name="ticket_id"/>
+                    <filter string="Confirmed Bookings" name="confirmed_bookings" domain="[('status','=','confirmed')]"/>
+                </search>
+            </field>
+        </record>
+
         <record id="view_match_booking_form" model="ir.ui.view">
             <field name="name">match.booking.form</field>
             <field name="model">match.booking</field>
@@ -217,6 +256,18 @@
         <!-- ========================================== -->
         <!-- 4. شاشات الدفع -->
         <!-- ========================================== -->
+        <record id="view_match_payment_search" model="ir.ui.view">
+            <field name="name">match.payment.search</field>
+            <field name="model">match.payment</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="payment_id"/>
+                    <field name="booking_id"/>
+                    <field name="user_id"/>
+                </search>
+            </field>
+        </record>
+
         <record id="view_match_payment_form" model="ir.ui.view">
             <field name="name">match.payment.form</field>
             <field name="model">match.payment</field>
@@ -261,7 +312,6 @@
                     <field name="user_id" string="Customer"/>
                     <field name="payment_method"/>
 
-                    <!-- شلنا الـ sum من هنا عشان الـ Total يختفي -->
                     <field name="amount"/>
 
                     <field name="state" widget="badge"

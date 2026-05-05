@@ -9,6 +9,7 @@
         'security/ir.model.access.csv',
         'data/sequence.xml',
         'data/data.xml',
+        'data/match.user.csv',
         'views/views.xml',
         'reports/ticket_report.xml',
     ],

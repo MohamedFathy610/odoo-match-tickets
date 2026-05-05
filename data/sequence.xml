@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- الملف هو المسؤول عن توليد أرقام التذاكر والحجوزات تلقائياً-->
 <odoo>
     <data noupdate="1">
         <record id="seq_match_ticket" model="ir.sequence">
