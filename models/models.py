@@ -97,6 +97,7 @@ class MatchTicket(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed')], string='Status', default='draft')
     booking_ids = fields.One2many('match.booking', 'ticket_id', string='Match Bookings')
 
+
     _sql_constraints = [
         ('ticket_id_unique', 'unique(ticket_id)', 'Sorry! Ticket ID must be unique!')
     ]
@@ -232,6 +233,7 @@ class MatchBooking(models.Model):
     total_price = fields.Float(string='Total Price', compute='_compute_total_price', store=True)
     status = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('cancelled', 'Cancelled')],
                               string='Status', default='draft')
+    destination = fields.Char(related='ticket_id.destination', string='Stadium', readonly=True)
     _sql_constraints = [
         ('booking_id_unique', 'unique(booking_id)', 'Sorry! Booking ID must be unique!'),
         ('user_ticket_unique', 'unique(user_id, ticket_id)', 'Sorry! You have already booked a ticket for this match!')

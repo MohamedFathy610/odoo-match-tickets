@@ -4,7 +4,7 @@
     'summary': 'Manage users, tickets, bookings, and payments',
     'description': 'A complete module to manage football match tickets based on class diagram.',
     'author': ' IS TEAM ' ,
-    'depends': ['base'],
+    'depends': ['base','contacts'],
     'data': [
         'security/ir.model.access.csv',
         'data/sequence.xml',

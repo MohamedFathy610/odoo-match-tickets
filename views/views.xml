@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- ========================================== -->
-        <!-- 0. شاشة إدخال بيانات الكريديت كارد (Popup) -->
-        <!-- ========================================== -->
+        <record id="view_match_credit_card_tree" model="ir.ui.view">
+            <field name="name">match.credit_card.tree</field>
+            <field name="model">match.credit_card</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="card_holder"/>
+                    <field name="card_number"/>
+                    <field name="expiry_date"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
         <record id="view_match_credit_card_form" model="ir.ui.view">
             <field name="name">match.credit_card.form</field>
             <field name="model">match.credit_card</field>
@@ -12,7 +22,7 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="user_id" readonly="1" force_save="1" options="{'no_open': True}"/>
+                                <field name="user_id" options="{'no_open': True}"/>
                                 <field name="card_holder" placeholder="e.g. Ali Hassan"/>
                             </group>
                             <group>
@@ -26,9 +36,12 @@
             </field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- 1. شاشات المستخدم -->
-        <!-- ========================================== -->
+        <record id="action_match_credit_card" model="ir.actions.act_window">
+            <field name="name">Credit Cards</field>
+            <field name="res_model">match.credit_card</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <record id="view_match_user_search" model="ir.ui.view">
             <field name="name">match.user.search</field>
             <field name="model">match.user</field>
@@ -99,9 +112,6 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- 2. شاشات التذاكر -->
-        <!-- ========================================== -->
         <record id="view_match_ticket_search" model="ir.ui.view">
             <field name="name">match.ticket.search</field>
             <field name="model">match.ticket</field>
@@ -153,6 +163,7 @@
                 <tree>
                     <field name="ticket_id"/>
                     <field name="match_name"/>
+                    <field name="destination"/>
                     <field name="departure_time"/>
                     <field name="price"/>
                     <field name="is_available" widget="boolean_toggle"/>
@@ -167,9 +178,6 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- 3. شاشات الحجز -->
-        <!-- ========================================== -->
         <record id="view_match_booking_search" model="ir.ui.view">
             <field name="name">match.booking.search</field>
             <field name="model">match.booking</field>
@@ -204,6 +212,7 @@
                             <group string="Main Info">
                                 <field name="user_id" domain="[('state', '=', 'confirmed')]" options="{'no_create': True, 'no_open': True}"/>
                                 <field name="ticket_id" domain="[('is_available', '=', True)]" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="destination"/>
                                 <field name="booking_time"/>
                             </group>
                             <group string="Payment &amp; Pricing">
@@ -234,6 +243,7 @@
                     <field name="booking_id"/>
                     <field name="user_id"/>
                     <field name="ticket_id"/>
+                    <field name="destination"/>
                     <field name="is_vip"/>
                     <field name="total_price"/>
 
@@ -253,9 +263,6 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- 4. شاشات الدفع -->
-        <!-- ========================================== -->
         <record id="view_match_payment_search" model="ir.ui.view">
             <field name="name">match.payment.search</field>
             <field name="model">match.payment</field>
@@ -329,13 +336,11 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- 5. القوائم (Menus) -->
-        <!-- ========================================== -->
         <menuitem id="menu_match_root" name="Match Tickets" sequence="1"/>
         <menuitem id="menu_match_users" name="Users" parent="menu_match_root" action="action_match_user" sequence="10"/>
         <menuitem id="menu_match_ticket" name="Tickets" parent="menu_match_root" action="action_match_ticket" sequence="20"/>
         <menuitem id="menu_match_booking" name="Bookings" parent="menu_match_root" action="action_match_booking" sequence="30"/>
         <menuitem id="menu_match_payment" name="Payments" parent="menu_match_root" action="action_match_payment" sequence="40"/>
+        <menuitem id="menu_match_credit_card" name="Credit Cards" parent="menu_match_root" action="action_match_credit_card" sequence="50"/>
     </data>
 </odoo>
