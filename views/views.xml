@@ -14,27 +14,33 @@
             </field>
         </record>
 
-        <record id="view_match_credit_card_form" model="ir.ui.view">
-            <field name="name">match.credit_card.form</field>
-            <field name="model">match.credit_card</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <group>
-                                <field name="user_id" options="{'no_open': True}"/>
-                                <field name="card_holder" placeholder="e.g. Ali Hassan"/>
-                            </group>
-                            <group>
-                                <field name="card_number" placeholder="16 Digits"/>
-                                <field name="expiry_date" placeholder="MM/YY"/>
-                                <field name="cvv" password="True" placeholder="***"/>
-                            </group>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+      <record id="view_match_credit_card_form" model="ir.ui.view">
+    <field name="name">match.credit_card.form</field>
+    <field name="model">match.credit_card</field>
+    <field name="arch" type="xml">
+        <form>
+            <header>
+                <button name="action_confirm_card" type="object" string="Confirm Card" class="oe_highlight" invisible="state == 'confirmed'"/>
+
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+            </header>
+
+            <sheet>
+                <group>
+                    <group>
+                        <field name="user_id" options="{'no_open': True}"/>
+                        <field name="card_holder" placeholder="e.g. Ali Hassan"/>
+                    </group>
+                    <group>
+                        <field name="card_number" placeholder="16 Digits"/>
+                        <field name="expiry_date" placeholder="MM/YY"/>
+                        <field name="cvv" password="True" placeholder="***"/>
+                    </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
         <record id="action_match_credit_card" model="ir.actions.act_window">
             <field name="name">Credit Cards</field>

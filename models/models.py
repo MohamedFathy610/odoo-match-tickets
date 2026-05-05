@@ -75,9 +75,11 @@ class MatchUser(models.Model):
         for record in self: record.state = 'confirmed'
 
     def write(self, vals):
-        for record in self:
-            if record.state == 'confirmed' and set(vals.keys()) - {'state'}:
-                raise ValidationError("Sorry! User data cannot be modified after the account has been confirmed.")
+        # تجاهل الشرط إذا كان النظام يقوم بالتحديث (Module Upgrade)
+        if not self.env.context.get('install_mode'):
+            for record in self:
+                if record.state == 'confirmed' and set(vals.keys()) - {'state'}:
+                    raise ValidationError("Sorry! User data cannot be modified after the account has been confirmed.")
         return super(MatchUser, self).write(vals)
 
 
@@ -320,6 +322,17 @@ class MatchCreditCard(models.Model):
     expiry_date = fields.Char(string='Expiry Date', required=True)
     cvv = fields.Char(string='CVV', required=True)
 
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('confirmed', 'Confirmed')
+    ], string='Status', default='draft')
+
+    # الدالة اللي هتشتغل لما تدوس على زرار Confirm
+    def action_confirm_card(self):
+        for record in self:
+            # هنا ممكن نضيف أي شروط، مثلاً نتأكد إن الحقول مش فاضية
+            record.state = 'confirmed'
+
     @api.constrains('card_number')
     def _check_card_number(self):
         for record in self:
@@ -335,8 +348,28 @@ class MatchCreditCard(models.Model):
     @api.constrains('expiry_date')
     def _check_expiry_date(self):
         for record in self:
+            if not record.expiry_date:
+                continue
+
+            # 1. التأكد من التنسيق (MM/YY)
             if not re.match(r'^(0[1-9]|1[0-2])\/\d{2}$', record.expiry_date):
                 raise ValidationError("Sorry! The expiry date must be in the format MM/YY (e.g., 12/26).")
+
+            # 2. التأكد من أن البطاقة لم تنتهِ صلاحيتها
+            # تقسيم النص إلى شهر وسنة
+            exp_month, exp_year = map(int, record.expiry_date.split('/'))
+
+            # تحويل السنة (مثلاً 26 إلى 2026)
+            full_exp_year = 2000 + exp_year
+
+            # الحصول على الشهر والسنة الحاليين
+            today = datetime.now()
+            current_year = today.year
+            current_month = today.month
+
+            # المقارنة: لو السنة أقل، أو نفس السنة والشهر أقل
+            if full_exp_year < current_year or (full_exp_year == current_year and exp_month < current_month):
+                raise ValidationError("Sorry! This credit card has already expired.")
 
     @api.constrains('cvv')
     def _check_cvv(self):
@@ -398,12 +431,6 @@ class MatchPayment(models.Model):
 # 2. Inheritance Code
 # ==========================================
 
-class ResPartnerInherit(models.Model):
-    _inherit = 'res.partner'
-
-    is_match_fan = fields.Boolean(string='Is a Match Fan?', default=False)
-    favorite_team = fields.Char(string='Favorite Team')
-
 class MatchTicketExtension(models.Model):
     _inherit = 'match.ticket'
     barcode = fields.Char(string='Ticket Barcode')
@@ -415,12 +442,3 @@ class MatchTicketVIP(models.Model):
     _description = 'VIP Ticket'
     vip_lounge_access = fields.Boolean(string='VIP Lounge Access', default=True)
     extra_services = fields.Char(string='Extra Services (Meals, Drinks)')
-
-
-class MatchAgent(models.Model):
-    _name = 'match.agent'
-    _description = 'Match Agent'
-    _inherits = {'res.partner': 'partner_id'}
-    partner_id = fields.Many2one('res.partner', required=True, ondelete='cascade')
-    agent_code = fields.Char(string='Agent Code', required=True)
-    shift = fields.Selection([('morning', 'Morning'), ('night', 'Night')], string='Shift')
