@@ -197,7 +197,7 @@
             </field>
         </record>
 
-        <record id="view_match_booking_form" model="ir.ui.view">
+<record id="view_match_booking_form" model="ir.ui.view">
             <field name="name">match.booking.form</field>
             <field name="model">match.booking</field>
             <field name="arch" type="xml">
@@ -232,6 +232,7 @@
 
                                 <field name="is_vip" widget="boolean_toggle"/>
                                 <field name="vip_fee" invisible="is_vip == False"/>
+
                                 <field name="discount_percentage" style="color: blue;"/>
                                 <field name="total_price" style="font-size: 18px; font-weight: bold; color: #008784;"/>
                             </group>
@@ -240,8 +241,7 @@
                 </form>
             </field>
         </record>
-
-       <record id="view_match_booking_tree" model="ir.ui.view">
+<record id="view_match_booking_tree" model="ir.ui.view">
             <field name="name">match.booking.tree</field>
             <field name="model">match.booking</field>
             <field name="arch" type="xml">

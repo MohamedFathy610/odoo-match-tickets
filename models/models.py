@@ -222,6 +222,8 @@ class MatchBooking(models.Model):
 
     booking_id = fields.Char(string='Booking ID', required=True, copy=False, readonly=True, default='New')
     user_id = fields.Many2one('match.user', string='User', required=True, ondelete='cascade')
+
+    # رجعنا التذكرة Many2one عشان تختار الماتش على طول
     ticket_id = fields.Many2one('match.ticket', string='Match', required=True, ondelete='cascade')
 
     booking_time = fields.Datetime(string='Booking Time', default=fields.Datetime.now, readonly=True)
@@ -229,13 +231,19 @@ class MatchBooking(models.Model):
     payment_method = fields.Selection([('cash', 'Cash'), ('credit_card', 'Credit Card')], string='Payment Method',
                                       default='cash', required=True)
     credit_card_id = fields.Many2one('match.credit_card', string='Credit Card')
+
+    # رجعنا زرار الـ VIP الـ Toggle والرسوم الإضافية
     is_vip = fields.Boolean(string='Upgrade to VIP (+200 EGP)', default=False)
     vip_fee = fields.Float(string='VIP Extra Fee', default=200.0, readonly=True)
+
     discount_percentage = fields.Float(string='Discount (%)', compute='_compute_discount', store=True)
     total_price = fields.Float(string='Total Price', compute='_compute_total_price', store=True)
     status = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('cancelled', 'Cancelled')],
                               string='Status', default='draft')
+
+    # رجعنا الـ destination لـ related لأنه الأسرع مع الـ Many2one
     destination = fields.Char(related='ticket_id.destination', string='Stadium', readonly=True)
+
     _sql_constraints = [
         ('booking_id_unique', 'unique(booking_id)', 'Sorry! Booking ID must be unique!'),
         ('user_ticket_unique', 'unique(user_id, ticket_id)', 'Sorry! You have already booked a ticket for this match!')
@@ -247,10 +255,8 @@ class MatchBooking(models.Model):
             if not record.ticket_id or not record.user_id:
                 continue
 
-            # الحصول على تاريخ الماتش الحالي
             current_match_date = record.ticket_id.departure_time.date()
 
-            # البحث عن حجوزات أخرى لنفس المستخدم في نفس تاريخ الماتش
             other_bookings = self.search([
                 ('id', '!=', record.id),
                 ('user_id', '=', record.user_id.id),
@@ -258,25 +264,29 @@ class MatchBooking(models.Model):
             ])
 
             for b in other_bookings:
-                if b.ticket_id.departure_time.date() == current_match_date:
+                if b.ticket_id and b.ticket_id.departure_time.date() == current_match_date:
                     raise ValidationError("Sorry! This user already has another booking on the same day.")
 
     @api.constrains('user_id')
     def _check_user_confirmed(self):
         for record in self:
             if record.user_id.state != 'confirmed':
-                raise ValidationError("Sorry! The booking cannot be completed. The user account must be confirmed first.")
+                raise ValidationError(
+                    "Sorry! The booking cannot be completed. The user account must be confirmed first.")
 
     @api.constrains('ticket_id')
     def _check_ticket_availability(self):
         for record in self:
             if record.ticket_id and not record.ticket_id.is_available:
-                raise ValidationError("Sorry! This ticket cannot be booked because the match is not currently available.")
+                raise ValidationError(
+                    "Sorry! This ticket cannot be booked because the match is not currently available.")
 
     @api.depends('payment_method')
     def _compute_discount(self):
-        for record in self: record.discount_percentage = 10.0 if record.payment_method == 'credit_card' else 0.0
+        for record in self:
+            record.discount_percentage = 10.0 if record.payment_method == 'credit_card' else 0.0
 
+    # رجعنا معادلة الحساب عشان تضيف الـ 200 جنيه لو الزرار متفعل
     @api.depends('ticket_id.price', 'is_vip', 'vip_fee', 'discount_percentage')
     def _compute_total_price(self):
         for record in self:
@@ -310,7 +320,6 @@ class MatchBooking(models.Model):
             if record.status == 'confirmed' and set(vals.keys()) - {'status'}:
                 raise ValidationError("Sorry! Booking data cannot be modified after it has been confirmed.")
         return super(MatchBooking, self).write(vals)
-
 
 class MatchCreditCard(models.Model):
     _name = 'match.credit_card'
