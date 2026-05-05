@@ -97,6 +97,10 @@ class MatchTicket(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed')], string='Status', default='draft')
     booking_ids = fields.One2many('match.booking', 'ticket_id', string='Match Bookings')
 
+    _sql_constraints = [
+        ('ticket_id_unique', 'unique(ticket_id)', 'Sorry! Ticket ID must be unique!')
+    ]
+
     @api.onchange('home_team')
     def _onchange_home_team_stadium(self):
         if self.home_team:
@@ -228,6 +232,30 @@ class MatchBooking(models.Model):
     total_price = fields.Float(string='Total Price', compute='_compute_total_price', store=True)
     status = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('cancelled', 'Cancelled')],
                               string='Status', default='draft')
+    _sql_constraints = [
+        ('booking_id_unique', 'unique(booking_id)', 'Sorry! Booking ID must be unique!'),
+        ('user_ticket_unique', 'unique(user_id, ticket_id)', 'Sorry! You have already booked a ticket for this match!')
+    ]
+
+    @api.constrains('user_id', 'ticket_id')
+    def _check_user_daily_limit(self):
+        for record in self:
+            if not record.ticket_id or not record.user_id:
+                continue
+
+            # الحصول على تاريخ الماتش الحالي
+            current_match_date = record.ticket_id.departure_time.date()
+
+            # البحث عن حجوزات أخرى لنفس المستخدم في نفس تاريخ الماتش
+            other_bookings = self.search([
+                ('id', '!=', record.id),
+                ('user_id', '=', record.user_id.id),
+                ('status', '!=', 'cancelled')
+            ])
+
+            for b in other_bookings:
+                if b.ticket_id.departure_time.date() == current_match_date:
+                    raise ValidationError("Sorry! This user already has another booking on the same day.")
 
     @api.constrains('user_id')
     def _check_user_confirmed(self):
@@ -330,6 +358,10 @@ class MatchPayment(models.Model):
     payment_time = fields.Datetime(string='Payment Time', default=fields.Datetime.now)
     state = fields.Selection([('draft', 'Draft'), ('paid', 'Paid')], string='Status', default='draft')
 
+    _sql_constraints = [
+        ('payment_id_unique', 'unique(payment_id)', 'Sorry! Payment ID must be unique!')
+    ]
+
     @api.model
     def create(self, vals):
         if vals.get('payment_id', 'New') == 'New':
@@ -363,6 +395,12 @@ class MatchPayment(models.Model):
 # ==========================================
 # 2. Inheritance Code
 # ==========================================
+
+class ResPartnerInherit(models.Model):
+    _inherit = 'res.partner'
+
+    is_match_fan = fields.Boolean(string='Is a Match Fan?', default=False)
+    favorite_team = fields.Char(string='Favorite Team')
 
 class MatchTicketExtension(models.Model):
     _inherit = 'match.ticket'
