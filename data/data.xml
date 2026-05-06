@@ -2,265 +2,420 @@
 <odoo>
     <data noupdate="1">
 
-        <!-- المستخدمين -->
-        <record id="user_xml_1" model="match.user">
-            <field name="name">Ali Hassan</field>
-            <field name="email">ali@xml.com</field>
-            <field name="phone_number">01000000001</field>
-            <field name="password">123456</field>
+        <!-- ==================== USERS (10) ==================== -->
+
+        <record id="user_demo_1" model="match.user">
+            <field name="name">Ahmed Mostafa</field>
+            <field name="email">ahmed.mostafa@demo.com</field>
+            <field name="phone_number">01100000001</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <record id="user_xml_2" model="match.user">
-            <field name="name">Mona Ali</field>
-            <field name="email">mona@xml.com</field>
-            <field name="phone_number">01000000002</field>
-            <field name="password">123456</field>
+        <record id="user_demo_2" model="match.user">
+            <field name="name">Rana Ibrahim</field>
+            <field name="email">rana.ibrahim@demo.com</field>
+            <field name="phone_number">01100000002</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <record id="user_xml_3" model="match.user">
-            <field name="name">Omar Tarek</field>
-            <field name="email">omar@xml.com</field>
-            <field name="phone_number">01000000003</field>
-            <field name="password">123456</field>
+        <record id="user_demo_3" model="match.user">
+            <field name="name">Mahmoud Fathy</field>
+            <field name="email">mahmoud.fathy@demo.com</field>
+            <field name="phone_number">01100000003</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <record id="user_xml_4" model="match.user">
-            <field name="name">Sara Ahmed</field>
-            <field name="email">sara@xml.com</field>
-            <field name="phone_number">01000000004</field>
-            <field name="password">123456</field>
+        <record id="user_demo_4" model="match.user">
+            <field name="name">Dina Sherif</field>
+            <field name="email">dina.sherif@demo.com</field>
+            <field name="phone_number">01100000004</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <record id="user_xml_5" model="match.user">
-            <field name="name">Khaled Sayed</field>
-            <field name="email">khaled@xml.com</field>
-            <field name="phone_number">01000000005</field>
-            <field name="password">123456</field>
+        <record id="user_demo_5" model="match.user">
+            <field name="name">Karim Adel</field>
+            <field name="email">karim.adel@demo.com</field>
+            <field name="phone_number">01100000005</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <record id="user_xml_6" model="match.user">
-            <field name="name">Nour Hisham</field>
-            <field name="email">nour@xml.com</field>
-            <field name="phone_number">01000000006</field>
-            <field name="password">123456</field>
+        <record id="user_demo_6" model="match.user">
+            <field name="name">Yasmine Gamal</field>
+            <field name="email">yasmine.gamal@demo.com</field>
+            <field name="phone_number">01100000006</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <record id="user_xml_7" model="match.user">
-            <field name="name">Tarek Youssef</field>
-            <field name="email">tarek@xml.com</field>
-            <field name="phone_number">01000000007</field>
-            <field name="password">123456</field>
+        <record id="user_demo_7" model="match.user">
+            <field name="name">Hassan Magdy</field>
+            <field name="email">hassan.magdy@demo.com</field>
+            <field name="phone_number">01100000007</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <record id="user_xml_8" model="match.user">
-            <field name="name">Salma Nabil</field>
-            <field name="email">salma@xml.com</field>
-            <field name="phone_number">01000000008</field>
-            <field name="password">123456</field>
+        <record id="user_demo_8" model="match.user">
+            <field name="name">Noha Ramadan</field>
+            <field name="email">noha.ramadan@demo.com</field>
+            <field name="phone_number">01100000008</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <record id="user_xml_9" model="match.user">
-            <field name="name">Youssef Kamal</field>
-            <field name="email">youssef@xml.com</field>
-            <field name="phone_number">01000000009</field>
-            <field name="password">123456</field>
+        <record id="user_demo_9" model="match.user">
+            <field name="name">Amr Zaki</field>
+            <field name="email">amr.zaki@demo.com</field>
+            <field name="phone_number">01100000009</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <record id="user_xml_10" model="match.user">
-            <field name="name">Hoda Samir</field>
-            <field name="email">hoda@xml.com</field>
-            <field name="phone_number">01000000010</field>
-            <field name="password">123456</field>
+        <record id="user_demo_10" model="match.user">
+            <field name="name">Maha Fouad</field>
+            <field name="email">maha.fouad@demo.com</field>
+            <field name="phone_number">01100000010</field>
+            <field name="password">pass123</field>
             <field name="state">confirmed</field>
         </record>
 
-        <!-- التذاكر -->
-        <record id="ticket_xml_1" model="match.ticket">
-            <field name="ticket_id">TKT-X01</field>
+        <!-- ==================== TICKETS (10) ====================
+             Rules respected:
+             - Each stadium: max 1 match per day
+             - Each team: min 3 days rest between matches
+             - Same home_team vs away_team pair: only once
+        -->
+
+        <!-- Match 1: Al Ahly vs Pyramids FC @ Cairo Stadium | 2026-07-01 -->
+        <record id="ticket_demo_1" model="match.ticket">
+            <field name="ticket_id">TKT-D01</field>
             <field name="home_team">Al Ahly</field>
-            <field name="away_team">Zamalek SC</field>
+            <field name="away_team">Pyramids FC</field>
             <field name="destination">Cairo Stadium</field>
-            <field name="price">300.0</field>
-            <field name="departure_time">2026-05-10 19:00:00</field>
+            <field name="price">350.0</field>
+            <field name="departure_time">2026-07-01 19:00:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="ticket_xml_2" model="match.ticket">
-            <field name="ticket_id">TKT-X02</field>
+        <!-- Match 2: Zamalek SC vs Al Masry @ Borg El Arab | 2026-07-01 -->
+        <record id="ticket_demo_2" model="match.ticket">
+            <field name="ticket_id">TKT-D02</field>
+            <field name="home_team">Zamalek SC</field>
+            <field name="away_team">Al Masry</field>
+            <field name="destination">Borg El Arab</field>
+            <field name="price">250.0</field>
+            <field name="departure_time">2026-07-01 17:00:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <!-- Match 3: Al Ittihad vs Ismaily SC @ Alexandria Stadium | 2026-07-04 -->
+        <record id="ticket_demo_3" model="match.ticket">
+            <field name="ticket_id">TKT-D03</field>
             <field name="home_team">Al Ittihad</field>
-            <field name="away_team">Smouha SC</field>
+            <field name="away_team">Ismaily SC</field>
             <field name="destination">Alexandria Stadium</field>
-            <field name="price">150.0</field>
-            <field name="departure_time">2026-05-12 17:00:00</field>
+            <field name="price">180.0</field>
+            <field name="departure_time">2026-07-04 18:00:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="ticket_xml_3" model="match.ticket">
-            <field name="ticket_id">TKT-X03</field>
+        <!-- Match 4: Smouha SC vs El Gouna FC @ Petrosport Stadium | 2026-07-04 -->
+        <record id="ticket_demo_4" model="match.ticket">
+            <field name="ticket_id">TKT-D04</field>
+            <field name="home_team">Smouha SC</field>
+            <field name="away_team">El Gouna FC</field>
+            <field name="destination">Petrosport Stadium</field>
+            <field name="price">140.0</field>
+            <field name="departure_time">2026-07-04 16:00:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <!-- Match 5: Suez SC vs Wadi Degla @ Suez Stadium | 2026-07-07 -->
+        <record id="ticket_demo_5" model="match.ticket">
+            <field name="ticket_id">TKT-D05</field>
+            <field name="home_team">Suez SC</field>
+            <field name="away_team">Wadi Degla</field>
+            <field name="destination">Suez Stadium</field>
+            <field name="price">120.0</field>
+            <field name="departure_time">2026-07-07 17:00:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <!-- Match 6: Pharco FC vs ZED FC @ 30 June Stadium | 2026-07-07 -->
+        <record id="ticket_demo_6" model="match.ticket">
+            <field name="ticket_id">TKT-D06</field>
+            <field name="home_team">Pharco FC</field>
+            <field name="away_team">ZED FC</field>
+            <field name="destination">30 June Stadium</field>
+            <field name="price">130.0</field>
+            <field name="departure_time">2026-07-07 19:30:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <!-- Match 7: Aswan SC vs Petrojet @ Aswan Stadium | 2026-07-10 -->
+        <record id="ticket_demo_7" model="match.ticket">
+            <field name="ticket_id">TKT-D07</field>
             <field name="home_team">Aswan SC</field>
-            <field name="away_team">Al Aluminium</field>
+            <field name="away_team">Petrojet</field>
             <field name="destination">Aswan Stadium</field>
             <field name="price">100.0</field>
-            <field name="departure_time">2026-05-15 15:00:00</field>
+            <field name="departure_time">2026-07-10 16:00:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="ticket_xml_4" model="match.ticket">
-            <field name="ticket_id">TKT-X04</field>
-            <field name="home_team">Al Masry</field>
-            <field name="away_team">Ismaily SC</field>
-            <field name="destination">Borg El Arab</field>
-            <field name="price">200.0</field>
-            <field name="departure_time">2026-05-18 18:00:00</field>
-        </record>
-
-        <record id="ticket_xml_5" model="match.ticket">
-            <field name="ticket_id">TKT-X05</field>
-            <field name="home_team">El Gouna FC</field>
-            <field name="away_team">ZED FC</field>
-            <field name="destination">Khaled Bichara Stadium</field>
-            <field name="price">150.0</field>
-            <field name="departure_time">2026-05-20 16:00:00</field>
-        </record>
-
-        <record id="ticket_xml_6" model="match.ticket">
-            <field name="ticket_id">TKT-X06</field>
-            <field name="home_team">Pyramids FC</field>
-            <field name="away_team">Pharco FC</field>
-            <field name="destination">30 June Stadium</field>
-            <field name="price">120.0</field>
-            <field name="departure_time">2026-05-22 19:00:00</field>
-        </record>
-
-        <record id="ticket_xml_7" model="match.ticket">
-            <field name="ticket_id">TKT-X07</field>
-            <field name="home_team">Suez SC</field>
-            <field name="away_team">Petrojet</field>
-            <field name="destination">Suez Stadium</field>
-            <field name="price">100.0</field>
-            <field name="departure_time">2026-05-25 17:00:00</field>
-        </record>
-
-        <record id="ticket_xml_8" model="match.ticket">
-            <field name="ticket_id">TKT-X08</field>
-            <field name="home_team">Wadi Degla</field>
-            <field name="away_team">Enppi</field>
-            <field name="destination">Al Salam Stadium</field>
-            <field name="price">120.0</field>
-            <field name="departure_time">2026-05-28 18:00:00</field>
-        </record>
-
-        <record id="ticket_xml_9" model="match.ticket">
-            <field name="ticket_id">TKT-X09</field>
+        <!-- Match 8: Ghazl El Mahalla vs Enppi @ El Mahalla Stadium | 2026-07-10 -->
+        <record id="ticket_demo_8" model="match.ticket">
+            <field name="ticket_id">TKT-D08</field>
             <field name="home_team">Ghazl El Mahalla</field>
-            <field name="away_team">Baladiyat El Mahalla</field>
+            <field name="away_team">Enppi</field>
             <field name="destination">El Mahalla Stadium</field>
-            <field name="price">80.0</field>
-            <field name="departure_time">2026-06-01 16:00:00</field>
+            <field name="price">90.0</field>
+            <field name="departure_time">2026-07-10 18:00:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="ticket_xml_10" model="match.ticket">
-            <field name="ticket_id">TKT-X10</field>
+        <!-- Match 9: Ceramica Cleopatra vs Al Aluminium @ Arab Contractors Stadium | 2026-07-13 -->
+        <record id="ticket_demo_9" model="match.ticket">
+            <field name="ticket_id">TKT-D09</field>
             <field name="home_team">Ceramica Cleopatra</field>
-            <field name="away_team">National Bank of Egypt</field>
+            <field name="away_team">Al Aluminium</field>
             <field name="destination">Arab Contractors Stadium</field>
-            <field name="price">100.0</field>
-            <field name="departure_time">2026-06-05 18:00:00</field>
+            <field name="price">110.0</field>
+            <field name="departure_time">2026-07-13 17:00:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <!-- الحجوزات والبطاقات -->
-        <record id="booking_xml_1" model="match.booking">
-            <field name="booking_id">BK-X01</field>
-            <field name="user_id" ref="user_xml_1"/>
-            <field name="ticket_id" ref="ticket_xml_1"/>
+        <!-- Match 10: National Bank of Egypt vs Baladiyat El Mahalla @ Al Salam Stadium | 2026-07-13 -->
+        <record id="ticket_demo_10" model="match.ticket">
+            <field name="ticket_id">TKT-D10</field>
+            <field name="home_team">National Bank of Egypt</field>
+            <field name="away_team">Baladiyat El Mahalla</field>
+            <field name="destination">Al Salam Stadium</field>
+            <field name="price">95.0</field>
+            <field name="departure_time">2026-07-13 19:00:00</field>
+            <field name="is_available">True</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="booking_xml_2" model="match.booking">
-            <field name="booking_id">BK-X02</field>
-            <field name="user_id" ref="user_xml_2"/>
-            <field name="ticket_id" ref="ticket_xml_2"/>
+        <!-- ==================== CREDIT CARDS (5) ==================== -->
+
+        <record id="cc_demo_1" model="match.credit_card">
+            <field name="user_id" ref="user_demo_1"/>
+            <field name="card_number">4111111111111111</field>
+            <field name="card_holder">Ahmed Mostafa</field>
+            <field name="expiry_date">09/27</field>
+            <field name="cvv">321</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="booking_xml_3" model="match.booking">
-            <field name="booking_id">BK-X03</field>
-            <field name="user_id" ref="user_xml_3"/>
-            <field name="ticket_id" ref="ticket_xml_3"/>
+        <record id="cc_demo_2" model="match.credit_card">
+            <field name="user_id" ref="user_demo_2"/>
+            <field name="card_number">5222222222222222</field>
+            <field name="card_holder">Rana Ibrahim</field>
+            <field name="expiry_date">06/28</field>
+            <field name="cvv">456</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="booking_xml_4" model="match.booking">
-            <field name="booking_id">BK-X04</field>
-            <field name="user_id" ref="user_xml_4"/>
-            <field name="ticket_id" ref="ticket_xml_4"/>
+        <record id="cc_demo_3" model="match.credit_card">
+            <field name="user_id" ref="user_demo_3"/>
+            <field name="card_number">3333444455556666</field>
+            <field name="card_holder">Mahmoud Fathy</field>
+            <field name="expiry_date">03/27</field>
+            <field name="cvv">789</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="booking_xml_5" model="match.booking">
-            <field name="booking_id">BK-X05</field>
-            <field name="user_id" ref="user_xml_5"/>
-            <field name="ticket_id" ref="ticket_xml_5"/>
+        <record id="cc_demo_4" model="match.credit_card">
+            <field name="user_id" ref="user_demo_4"/>
+            <field name="card_number">6011777788889999</field>
+            <field name="card_holder">Dina Sherif</field>
+            <field name="expiry_date">11/26</field>
+            <field name="cvv">147</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="booking_xml_6" model="match.booking">
-            <field name="booking_id">BK-X06</field>
-            <field name="user_id" ref="user_xml_6"/>
-            <field name="ticket_id" ref="ticket_xml_6"/>
+        <record id="cc_demo_5" model="match.credit_card">
+            <field name="user_id" ref="user_demo_5"/>
+            <field name="card_number">9999000011112222</field>
+            <field name="card_holder">Karim Adel</field>
+            <field name="expiry_date">08/29</field>
+            <field name="cvv">258</field>
+            <field name="state">confirmed</field>
         </record>
 
-        <record id="booking_xml_7" model="match.booking">
-            <field name="booking_id">BK-X07</field>
-            <field name="user_id" ref="user_xml_7"/>
-            <field name="ticket_id" ref="ticket_xml_7"/>
-        </record>
+        <!-- ==================== BOOKINGS (10) ==================== -->
+        <!-- Each user books one unique ticket, one booking per user per day -->
 
-        <record id="booking_xml_8" model="match.booking">
-            <field name="booking_id">BK-X08</field>
-            <field name="user_id" ref="user_xml_8"/>
-            <field name="ticket_id" ref="ticket_xml_8"/>
-        </record>
-
-        <record id="booking_xml_9" model="match.booking">
-            <field name="booking_id">BK-X09</field>
-            <field name="user_id" ref="user_xml_9"/>
-            <field name="ticket_id" ref="ticket_xml_9"/>
-        </record>
-
-        <record id="booking_xml_10" model="match.booking">
-            <field name="booking_id">BK-X10</field>
-            <field name="user_id" ref="user_xml_10"/>
-            <field name="ticket_id" ref="ticket_xml_10"/>
-        </record>
-
-        <record id="cc_xml_1" model="match.credit_card">
-            <field name="user_id" ref="user_xml_1"/>
-            <field name="card_number">1111222233334444</field>
-            <field name="card_holder">Ali Hassan</field>
-            <field name="expiry_date">12/26</field>
-            <field name="cvv">123</field>
-        </record>
-
-        <!-- عمليات الدفع -->
-        <record id="pay_xml_1" model="match.payment">
-            <field name="payment_id">PAY-X01</field>
-            <field name="booking_id" ref="booking_xml_1"/>
+        <record id="booking_demo_1" model="match.booking">
+            <field name="booking_id">BK-D01</field>
+            <field name="user_id" ref="user_demo_1"/>
+            <field name="ticket_id" ref="ticket_demo_1"/>
             <field name="payment_method">credit_card</field>
-            <field name="credit_card_id" ref="cc_xml_1"/>
+            <field name="credit_card_id" ref="cc_demo_1"/>
+            <field name="is_vip">True</field>
+            <field name="status">confirmed</field>
         </record>
 
-        <record id="pay_xml_2" model="match.payment">
-            <field name="payment_id">PAY-X02</field>
-            <field name="booking_id" ref="booking_xml_2"/>
-            <field name="payment_method">cash</field>
+        <record id="booking_demo_2" model="match.booking">
+            <field name="booking_id">BK-D02</field>
+            <field name="user_id" ref="user_demo_2"/>
+            <field name="ticket_id" ref="ticket_demo_2"/>
+            <field name="payment_method">credit_card</field>
+            <field name="credit_card_id" ref="cc_demo_2"/>
+            <field name="is_vip">False</field>
+            <field name="status">confirmed</field>
         </record>
 
-        <record id="pay_xml_3" model="match.payment">
-            <field name="payment_id">PAY-X03</field>
-            <field name="booking_id" ref="booking_xml_3"/>
+        <record id="booking_demo_3" model="match.booking">
+            <field name="booking_id">BK-D03</field>
+            <field name="user_id" ref="user_demo_3"/>
+            <field name="ticket_id" ref="ticket_demo_3"/>
+            <field name="payment_method">credit_card</field>
+            <field name="credit_card_id" ref="cc_demo_3"/>
+            <field name="is_vip">True</field>
+            <field name="status">confirmed</field>
+        </record>
+
+        <record id="booking_demo_4" model="match.booking">
+            <field name="booking_id">BK-D04</field>
+            <field name="user_id" ref="user_demo_4"/>
+            <field name="ticket_id" ref="ticket_demo_4"/>
+            <field name="payment_method">credit_card</field>
+            <field name="credit_card_id" ref="cc_demo_4"/>
+            <field name="is_vip">False</field>
+            <field name="status">confirmed</field>
+        </record>
+
+        <record id="booking_demo_5" model="match.booking">
+            <field name="booking_id">BK-D05</field>
+            <field name="user_id" ref="user_demo_5"/>
+            <field name="ticket_id" ref="ticket_demo_5"/>
+            <field name="payment_method">credit_card</field>
+            <field name="credit_card_id" ref="cc_demo_5"/>
+            <field name="is_vip">True</field>
+            <field name="status">confirmed</field>
+        </record>
+
+        <record id="booking_demo_6" model="match.booking">
+            <field name="booking_id">BK-D06</field>
+            <field name="user_id" ref="user_demo_6"/>
+            <field name="ticket_id" ref="ticket_demo_6"/>
             <field name="payment_method">cash</field>
+            <field name="is_vip">False</field>
+            <field name="status">confirmed</field>
+        </record>
+
+        <record id="booking_demo_7" model="match.booking">
+            <field name="booking_id">BK-D07</field>
+            <field name="user_id" ref="user_demo_7"/>
+            <field name="ticket_id" ref="ticket_demo_7"/>
+            <field name="payment_method">cash</field>
+            <field name="is_vip">True</field>
+            <field name="status">confirmed</field>
+        </record>
+
+        <record id="booking_demo_8" model="match.booking">
+            <field name="booking_id">BK-D08</field>
+            <field name="user_id" ref="user_demo_8"/>
+            <field name="ticket_id" ref="ticket_demo_8"/>
+            <field name="payment_method">cash</field>
+            <field name="is_vip">False</field>
+            <field name="status">draft</field>
+        </record>
+
+        <record id="booking_demo_9" model="match.booking">
+            <field name="booking_id">BK-D09</field>
+            <field name="user_id" ref="user_demo_9"/>
+            <field name="ticket_id" ref="ticket_demo_9"/>
+            <field name="payment_method">cash</field>
+            <field name="is_vip">False</field>
+            <field name="status">draft</field>
+        </record>
+
+        <record id="booking_demo_10" model="match.booking">
+            <field name="booking_id">BK-D10</field>
+            <field name="user_id" ref="user_demo_10"/>
+            <field name="ticket_id" ref="ticket_demo_10"/>
+            <field name="payment_method">cash</field>
+            <field name="is_vip">False</field>
+            <field name="status">draft</field>
+        </record>
+
+        <!-- ==================== PAYMENTS (10) ==================== -->
+
+        <record id="pay_demo_1" model="match.payment">
+            <field name="payment_id">PAY-D01</field>
+            <field name="booking_id" ref="booking_demo_1"/>
+            <field name="state">paid</field>
+        </record>
+
+        <record id="pay_demo_2" model="match.payment">
+            <field name="payment_id">PAY-D02</field>
+            <field name="booking_id" ref="booking_demo_2"/>
+            <field name="state">paid</field>
+        </record>
+
+        <record id="pay_demo_3" model="match.payment">
+            <field name="payment_id">PAY-D03</field>
+            <field name="booking_id" ref="booking_demo_3"/>
+            <field name="state">paid</field>
+        </record>
+
+        <record id="pay_demo_4" model="match.payment">
+            <field name="payment_id">PAY-D04</field>
+            <field name="booking_id" ref="booking_demo_4"/>
+            <field name="state">paid</field>
+        </record>
+
+        <record id="pay_demo_5" model="match.payment">
+            <field name="payment_id">PAY-D05</field>
+            <field name="booking_id" ref="booking_demo_5"/>
+            <field name="state">paid</field>
+        </record>
+
+        <record id="pay_demo_6" model="match.payment">
+            <field name="payment_id">PAY-D06</field>
+            <field name="booking_id" ref="booking_demo_6"/>
+            <field name="state">paid</field>
+        </record>
+
+        <record id="pay_demo_7" model="match.payment">
+            <field name="payment_id">PAY-D07</field>
+            <field name="booking_id" ref="booking_demo_7"/>
+            <field name="state">paid</field>
+        </record>
+
+        <record id="pay_demo_8" model="match.payment">
+            <field name="payment_id">PAY-D08</field>
+            <field name="booking_id" ref="booking_demo_8"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="pay_demo_9" model="match.payment">
+            <field name="payment_id">PAY-D09</field>
+            <field name="booking_id" ref="booking_demo_9"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="pay_demo_10" model="match.payment">
+            <field name="payment_id">PAY-D10</field>
+            <field name="booking_id" ref="booking_demo_10"/>
+            <field name="state">draft</field>
         </record>
 
     </data>
